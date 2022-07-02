@@ -7,8 +7,6 @@ import os
 
 load_dotenv("/home/nilay/Programming/pvt_keys/keys.txt")
 
-
-
 with open("SimpleStorage.sol", "r") as file:
     SimpleStorage_file = file.read()
     solcx.install_solc('0.6.0')
@@ -42,9 +40,7 @@ chain_id = 4
 address = os.getenv('address')
 private_key = os.getenv('private_key')
 
-
-
-# Creat ethe contract in python
+# Create the contract in python
 SimpleStorage = w3.eth.contract(abi=abi, bytecode=bytecode)
 
 # latest transaction count for nonce
