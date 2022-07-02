@@ -1,8 +1,8 @@
-from brownie import accounts, simplestorage
+from brownie import accounts, simplestorage, network, config
 
 
 def deploy_simple_storage():
-    account = accounts[0]
+    account = get_account()
     simple_storage = simplestorage.deploy({
         'from': account
     })
@@ -16,6 +16,13 @@ def deploy_simple_storage():
     transaction.wait(1)
     updated_store_value = simple_storage.retrieve()
     print(updated_store_value)
+
+
+def get_account():
+    if network.show_active() == "development":
+        return accounts[0]
+    else:
+        return accounts.add(config["wallets"]["from_key"])
 
 
 def main():
