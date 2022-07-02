@@ -1,0 +1,3 @@
+dotenv : /home/nilay/Programming/pvt_keys/keys.txt
+wallets:
+  from_key: ${private_key}
