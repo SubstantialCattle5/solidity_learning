@@ -1,34 +1,18 @@
-from brownie import FundMe, config, network, MockV3Aggregator
-from scripts.common import get_account
+from brownie import FundMe, config, network
+from scripts.common import get_account , deploy_mocks
 
-DECIMALS = 8
-# This is 2,000
-INITIAL_VALUE = 200000000000
-
-
-def deploy_mocks():
-    """
-    Use this script if you want to deploy mocks to a testnet
-    """
-    print(f"The active network is {network.show_active()}")
-    print("Deploying Mocks...")
-    account = get_account()
-    mock_aggregator = MockV3Aggregator.deploy(DECIMALS, INITIAL_VALUE, {"from": account})
-    print("Mocks Deployed!")
-    return mock_aggregator.address
 
 
 def fundme():
     # getting the key
     account = get_account()
 
-    # deploying the contract
     # getting the price feed key
     pricefeed = config['networks'][network.show_active()][
         'eth_usd_price_feed'] if network.show_active() != "development" else deploy_mocks()
 
-    print(f"The active network is {network.show_active()}")
-
+    # deploying the contract
+    print(f"The active network is {network.show_active()}\n")
     fundme_deploy = FundMe.deploy(
         pricefeed, {
             "from": account},
