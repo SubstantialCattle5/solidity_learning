@@ -6,7 +6,6 @@ DECIMALS = 8
 INITIAL_VALUE = 200000000000
 
 
-
 def deploy_mocks():
     """
     Use this script if you want to deploy mocks to a testnet
@@ -16,7 +15,8 @@ def deploy_mocks():
     account = get_account()
     mock_aggregator = MockV3Aggregator.deploy(DECIMALS, INITIAL_VALUE, {"from": account})
     print("Mocks Deployed!")
-    return  mock_aggregator.address
+    return mock_aggregator.address
+
 
 def fundme():
     # getting the key
@@ -24,11 +24,8 @@ def fundme():
 
     # deploying the contract
     # getting the price feed key
-    pricefeed = 0
-    if network.show_active() != "development":
-        pricefeed = config['networks'][network.show_active()]['eth_usd_price_feed']
-    else:
-        pricefeed = deploy_mocks()
+    pricefeed = config['networks'][network.show_active()][
+        'eth_usd_price_feed'] if network.show_active() != "development" else deploy_mocks()
 
     print(f"The active network is {network.show_active()}")
 
